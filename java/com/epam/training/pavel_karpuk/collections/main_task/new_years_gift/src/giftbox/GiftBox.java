@@ -1,6 +1,6 @@
 package giftbox;
 
-import bars.BarBase;
+import sweets.AbstractSweet;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -8,33 +8,33 @@ import java.util.List;
 
 public class GiftBox {
 
-    private List<BarBase> bars;
+    private List<AbstractSweet> sweets;
 
-    public GiftBox(List<BarBase> bars) {
-        this.bars = bars;
+    public GiftBox(List<AbstractSweet> sweets) {
+        this.sweets = sweets;
     }
 
-    public List<BarBase> getBars() {
-        return bars;
+    public List<AbstractSweet> getSweets() {
+        return sweets;
     }
 
     public int getGiftBoxWeight () {
         int totalWeight = 0;
-        for (BarBase bar : bars) {
-            totalWeight += bar.getWeight();
+        for (AbstractSweet sweet : sweets) {
+            totalWeight += sweet.getWeight();
         }
         return totalWeight;
     }
 
     public void sortByWeight() {
-        bars.sort(Comparator.comparingInt(BarBase::getWeight));
+        sweets.sort(Comparator.comparingInt(AbstractSweet::getWeight));
     }
 
-    public List<BarBase> getBarsWithAmountOfSugarInRange (int from, int to) {
-        List <BarBase> listWithAMountOfSugarInRange = new ArrayList<>();
-        for (BarBase bar : bars) {
-            if (bar.getAmountOfSugar() >= from && bar.getAmountOfSugar() <= to) {
-                listWithAMountOfSugarInRange.add(bar);
+    public List<AbstractSweet> getSweetsWithAmountOfSugarInRange (int from, int to) {
+        List <AbstractSweet> listWithAMountOfSugarInRange = new ArrayList<>();
+        for (AbstractSweet sweet : sweets) {
+            if (sweet.getAmountOfSugar() >= from && sweet.getAmountOfSugar() <= to) {
+                listWithAMountOfSugarInRange.add(sweet);
             }
         }
         return listWithAMountOfSugarInRange;
@@ -43,7 +43,7 @@ public class GiftBox {
     @Override
     public String toString() {
         return "GiftBox{" +
-                "bars=" + bars +
+                "sweets=" + sweets +
                 '}';
     }
 }
