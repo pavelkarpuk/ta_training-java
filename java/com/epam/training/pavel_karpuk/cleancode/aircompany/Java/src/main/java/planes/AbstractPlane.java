@@ -1,14 +1,15 @@
-package Planes;
+package planes;
 
 import java.util.Objects;
 
-abstract public class Plane {
-    String model;
+public abstract class AbstractPlane {
+
+    private String model;
     private int maxSpeed;
     private int maxFlightDistance;
     private int maxLoadCapacity;
 
-    public Plane(String model, int maxSpeed, int maxFlightDistance, int maxLoadCapacity) {
+    public AbstractPlane(String model, int maxSpeed, int maxFlightDistance, int maxLoadCapacity) {
         this.model = model;
         this.maxSpeed = maxSpeed;
         this.maxFlightDistance = maxFlightDistance;
@@ -45,11 +46,11 @@ abstract public class Plane {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Plane plane = (Plane) o;
-        return maxSpeed == plane.maxSpeed &&
-                maxFlightDistance == plane.maxFlightDistance &&
-                maxLoadCapacity == plane.maxLoadCapacity &&
-                Objects.equals(model, plane.model);
+        AbstractPlane abstractPlane = (AbstractPlane) o;
+        return maxSpeed == abstractPlane.maxSpeed &&
+                maxFlightDistance == abstractPlane.maxFlightDistance &&
+                maxLoadCapacity == abstractPlane.maxLoadCapacity &&
+                Objects.equals(model, abstractPlane.model);
     }
 
     @Override
