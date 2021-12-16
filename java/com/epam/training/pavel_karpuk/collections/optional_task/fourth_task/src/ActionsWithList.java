@@ -7,7 +7,7 @@ import java.util.List;
 public class ActionsWithList {
 
     public List<String> readsLinesFromFileToList() throws IOException {
-        return Files.readAllLines(Paths.get("./java/com/epam/training/pavel_karpuk/collections/optional_task/fourth_task/Poem.txt"));
+        return Files.readAllLines(Paths.get("C:\\java\\com\\epam\\training\\pavel_karpuk\\collections\\optional_task\\fourth_task\\Poem.txt"));
     }
 
     public void sortByLinesLength (List<String> lines) {
