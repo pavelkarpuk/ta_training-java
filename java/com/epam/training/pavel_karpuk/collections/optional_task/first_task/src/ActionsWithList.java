@@ -8,7 +8,7 @@ import java.util.List;
 public class ActionsWithList {
 
     public List<String> readsLinesFromFileToList() throws IOException {
-        return Files.readAllLines(Paths.get("C:\\java\\com\\epam\\training\\pavel_karpuk\\collections\\optional_task\\first_task\\Song.txt"));
+        return Files.readAllLines(Paths.get("./collections/optional_task/first_task/Song.txt"));
     }
 
     public void getListInReverseOrder(List<String> lines) {
@@ -16,6 +16,6 @@ public class ActionsWithList {
     }
 
     public void writesLinesFromListToFile(List<String> lines) throws IOException {
-        Files.write(Path.of("C:\\java\\com\\epam\\training\\pavel_karpuk\\collections\\optional_task\\first_task\\Song.txt"), lines);
+        Files.write(Path.of("./collections/optional_task/first_task/Song.txt"), lines);
     }
 }
