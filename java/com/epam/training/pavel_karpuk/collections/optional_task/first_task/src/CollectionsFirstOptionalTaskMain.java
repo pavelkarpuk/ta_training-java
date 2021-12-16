@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.util.List;
 
-public class Main {
+public class CollectionsFirstOptionalTaskMain {
     public static void main(String[] args) throws IOException {
         ActionsWithList actionsWithList = new ActionsWithList();
         List <String> lines = actionsWithList.readsLinesFromFileToList();
