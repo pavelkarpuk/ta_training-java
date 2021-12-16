@@ -1,0 +1,13 @@
+package constants;
+
+public enum SubjectEnum {
+    MATH,
+    RUSSIAN,
+    CHEMISTRY,
+    PHYSICS,
+    MACROECONOMICS,
+    MICROECONOMICS,
+    ARCHITECTURE,
+    RESISTANCE_OF_MATERIALS,
+    CONSTRUCTION_MECHANICS,
+}
