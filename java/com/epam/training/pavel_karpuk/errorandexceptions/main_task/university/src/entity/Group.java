@@ -12,7 +12,7 @@ public class Group {
     private List<Student> listOfStudents;
 
     public Group(GroupEnum group, List<Student> listOfStudents) throws GroupHasNoStudentsException {
-        if (listOfStudents == null || listOfStudents.isEmpty()) throw new GroupHasNoStudentsException();
+        if (listOfStudents == null || listOfStudents.isEmpty()) throw new GroupHasNoStudentsException("There is no any students at the group.");
         this.group = group;
         this.listOfStudents = listOfStudents;
     }

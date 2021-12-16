@@ -6,9 +6,7 @@ import constants.SubjectEnum;
 import exception.StudentHasNoSubjectsException;
 import exception.WrongGradeException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Objects;
+import java.util.*;
 
 public class Student {
 
@@ -19,7 +17,12 @@ public class Student {
     private HashMap<SubjectEnum, ArrayList<Integer>> subjectsWithGrades;
 
     public Student(String studentName, String studentLastName, FacultyEnum faculty, GroupEnum group, HashMap<SubjectEnum, ArrayList<Integer>> subjectsWithGrades) throws StudentHasNoSubjectsException, WrongGradeException {
-        if (subjectsWithGrades == null || subjectsWithGrades.isEmpty()) throw new StudentHasNoSubjectsException();
+        if (subjectsWithGrades == null || subjectsWithGrades.isEmpty()) throw new StudentHasNoSubjectsException("Student does not have any subjects.");
+        for (SubjectEnum subject : subjectsWithGrades.keySet()) {
+            for (Integer grade : subjectsWithGrades.get(subject)) {
+                if (grade < 0 || grade > 10) throw new WrongGradeException("The grade cannot be lower than 0 or higher than 10.");
+            }
+        }
         this.studentName = studentName;
         this.studentLastName = studentLastName;
         this.faculty = faculty;

@@ -7,13 +7,12 @@ import java.util.Collection;
 import java.util.List;
 
 public class Utils {
-    public double getAverageGrade (Collection<ArrayList<Integer>> CollectionOfAllGrades) throws WrongGradeException {
+    public double getAverageGrade (Collection<ArrayList<Integer>> CollectionOfAllGrades) {
         int sumOfGrades = 0;
         int numberOfGrades = 0;
         double averageGrade;
         for (List<Integer> listOfGrades : CollectionOfAllGrades) {
             for (Integer grade : listOfGrades) {
-                if (grade < 0 || grade > 10) throw new WrongGradeException();
                 numberOfGrades++;
                 sumOfGrades += grade;
             }

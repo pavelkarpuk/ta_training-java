@@ -16,7 +16,7 @@ public class University {
     private List<Faculty> listOfFaculties;
 
     public University(List<Faculty> listOfFaculties) throws UniversityHasNoFacultiesException {
-        if (listOfFaculties == null || listOfFaculties.isEmpty()) throw new UniversityHasNoFacultiesException();
+        if (listOfFaculties == null || listOfFaculties.isEmpty()) throw new UniversityHasNoFacultiesException("There is no any faculties at the university");
         this.listOfFaculties = listOfFaculties;
     }
 
@@ -59,7 +59,7 @@ public class University {
                 }
             }
         }
-        if (allStudentGrades.isEmpty()) throw new EmptyCollectionException("There is no such student");
+        if (allStudentGrades.isEmpty()) throw new EmptyCollectionException("There is no such student.");
         return allStudentGrades;
     }
 
@@ -78,7 +78,7 @@ public class University {
                 }
             }
         }
-        if (allGradesForSubjectInGroup.isEmpty()) throw new EmptyCollectionException("There is no such subject in this group");
+        if (allGradesForSubjectInGroup.isEmpty()) throw new EmptyCollectionException("There is no such subject in this group.");
         return allGradesForSubjectInGroup;
     }
 
@@ -93,7 +93,7 @@ public class University {
                 }
             }
         }
-        if (allGradesForSubjectInUniversity.isEmpty()) throw new EmptyCollectionException("There is no such subject in this university");
+        if (allGradesForSubjectInUniversity.isEmpty()) throw new EmptyCollectionException("There is no such subject in this university.");
         return allGradesForSubjectInUniversity;
     }
 }

@@ -12,7 +12,7 @@ public class Faculty {
     private List<Group> listOfGroups;
 
     public Faculty(FacultyEnum faculty, List<Group> listOfGroups) throws FacultyHasNoGroupsException {
-        if (listOfGroups == null || listOfGroups.isEmpty()) throw new FacultyHasNoGroupsException();
+        if (listOfGroups == null || listOfGroups.isEmpty()) throw new FacultyHasNoGroupsException("There is no any groups at the faculty.");
         this.faculty = faculty;
         this.listOfGroups = listOfGroups;
     }
