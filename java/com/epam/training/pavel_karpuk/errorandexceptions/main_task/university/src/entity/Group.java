@@ -1,8 +1,13 @@
 package entity;
 
 import constants.GroupEnum;
+import constants.SubjectEnum;
+import exception.NoEntityException;
 import exception.GroupHasNoStudentsException;
+import utils.Utils;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -31,6 +36,31 @@ public class Group {
 
     public void setListOfStudents(List<Student> listOfStudents) {
         this.listOfStudents = listOfStudents;
+    }
+
+    public Student getStudentByName(String firstName, String lastName) throws NoEntityException {
+        for (Student student : listOfStudents) {
+            if (student.getFirstName().equals(firstName) && student.getLastName().equals(lastName)){
+                return student;
+            }
+        }
+        throw new NoEntityException();
+    }
+
+    public double getAverageGradeForSubjectInGroup(SubjectEnum subjectEnum) throws NoEntityException {
+        double averageGradeForSubjectInGroup = Utils.calculateAverageGrade(getAllGradesForSubjectInGroup(subjectEnum));
+        if (averageGradeForSubjectInGroup == 0.0) throw new NoEntityException("There is no such subject in Group: " + group.name() + ".");
+        return averageGradeForSubjectInGroup;
+    }
+
+    public Collection<ArrayList<Integer>> getAllGradesForSubjectInGroup(SubjectEnum subjectEnum) {
+        Collection<ArrayList<Integer>> allGradesForSubjectInGroup = new ArrayList<>();
+        for (Student student : getListOfStudents()) {
+            if (student.getSubjectsWithGrades().containsKey(subjectEnum)) {
+                allGradesForSubjectInGroup.add(student.getSubjectsWithGrades().get(subjectEnum));
+            }
+        }
+        return allGradesForSubjectInGroup;
     }
 
     @Override

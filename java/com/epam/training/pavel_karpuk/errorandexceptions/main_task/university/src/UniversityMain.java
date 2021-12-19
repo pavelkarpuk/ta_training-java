@@ -332,11 +332,10 @@ public class UniversityMain {
 
         University universityBNTU = new University(new ArrayList<>(Arrays.asList(civilEngineeringFaculty, ArchitectureFaculty, InstrumentMakingFaculty, EnergyFaculty, EconomicFaculty)));
 
-        System.out.println("Average grade of the student: " +
-                utils.getAverageGrade(universityBNTU.getAllStudentGrades("Darrell", "Hale")));
+        System.out.println("Average grade of the student: " + universityBNTU.getAverageGradeForStudent("Darrell", "Hale"));
         System.out.println("Average grade on the " + SubjectEnum.MATH + " in the group: " +
-                utils.getAverageGrade(universityBNTU.getAllGradesForSubjectInGroup(SubjectEnum.MATH, GroupEnum.ECONOMIC_GROUP_1, FacultyEnum.ECONOMIC)));
+                universityBNTU.getAverageGradeForSubjectInGroup(SubjectEnum.MATH, GroupEnum.ECONOMIC_GROUP_1, FacultyEnum.ECONOMIC));
         System.out.println("Average grade on the " + SubjectEnum.MATH + " in the university: " +
-                utils.getAverageGrade(universityBNTU.getAllGradesForSubjectInUniversity(SubjectEnum.MATH)));
+                universityBNTU.getAverageGradeForSubjectInUniversity(SubjectEnum.MATH));
     }
 }

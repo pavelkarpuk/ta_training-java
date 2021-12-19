@@ -3,8 +3,9 @@ package entity;
 import constants.FacultyEnum;
 import constants.GroupEnum;
 import constants.SubjectEnum;
-import exception.EmptyCollectionException;
+import exception.NoEntityException;
 import exception.UniversityHasNoFacultiesException;
+import utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,6 +29,44 @@ public class University {
         this.listOfFaculties = listOfFaculties;
     }
 
+    public double getAverageGradeForStudent(String firstName, String lastName) throws NoEntityException {
+        Student student = null;
+        for (Faculty faculty : listOfFaculties) {
+            try {
+                student = faculty.getStudentByName(firstName, lastName);
+            } catch (NoEntityException ignored) {
+            }
+        }
+        if (student == null) throw new NoEntityException("Student " + firstName + " " + lastName + " doesn't study at this university.");
+        return student.getAverageGrade();
+    }
+
+    public Faculty getFacultyByName (FacultyEnum facultyEnum) throws NoEntityException {
+        for (Faculty faculty : listOfFaculties) {
+            if (faculty.getFaculty().equals(facultyEnum)) {
+                return faculty;
+            }
+        }
+        throw new NoEntityException("There is no such Faculty: " + facultyEnum.name() + ".");
+    }
+
+    public double getAverageGradeForSubjectInGroup(SubjectEnum subjectEnum, GroupEnum groupEnum, FacultyEnum facultyEnum) throws NoEntityException {
+        return getFacultyByName(facultyEnum).getAverageGradeForSubjectInGroup(subjectEnum, groupEnum);
+    }
+
+    public Collection<ArrayList<Integer>> getAllGradesForSubjectInUniversity(SubjectEnum subjectEnum) throws NoEntityException {
+        Collection<ArrayList<Integer>> allGradesForSubjectInUniversity = new ArrayList<>();
+        for (Faculty faculty : listOfFaculties) {
+            allGradesForSubjectInUniversity.addAll(faculty.getAllGradesForSubjectInFaculty(subjectEnum));
+        }
+        if (allGradesForSubjectInUniversity.isEmpty()) throw new NoEntityException("There is no such subject in this university.");
+        return allGradesForSubjectInUniversity;
+    }
+
+    public double getAverageGradeForSubjectInUniversity (SubjectEnum subjectEnum) throws NoEntityException {
+        return Utils.calculateAverageGrade(getAllGradesForSubjectInUniversity(subjectEnum));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -46,54 +85,5 @@ public class University {
         return "University{" +
                 "listOfFaculties=" + listOfFaculties +
                 '}';
-    }
-
-    public Collection<ArrayList<Integer>> getAllStudentGrades(String studentName, String studentLastName) throws EmptyCollectionException {
-        Collection<ArrayList<Integer>> allStudentGrades = new ArrayList<>();
-        for (Faculty faculty : listOfFaculties) {
-            for (Group group : faculty.getListOfGroups()) {
-                for (Student student : group.getListOfStudents()) {
-                    if (studentName.equals(student.getStudentName()) && studentLastName.equals(student.getStudentLastName())) {
-                        allStudentGrades = student.getSubjectsWithGrades().values();
-                    }
-                }
-            }
-        }
-        if (allStudentGrades.isEmpty()) throw new EmptyCollectionException("There is no such student.");
-        return allStudentGrades;
-    }
-
-    public Collection<ArrayList<Integer>> getAllGradesForSubjectInGroup(SubjectEnum subjectEnum, GroupEnum groupEnum, FacultyEnum facultyEnum) throws EmptyCollectionException {
-        Collection<ArrayList<Integer>> allGradesForSubjectInGroup = new ArrayList<>();
-        for (Faculty faculty : listOfFaculties) {
-            if (faculty.getFaculty().equals(facultyEnum)) {
-                for (Group group : faculty.getListOfGroups()) {
-                    if (group.getGroup().equals(groupEnum)) {
-                        for (Student student : group.getListOfStudents()) {
-                            if (student.getSubjectsWithGrades().containsKey(subjectEnum)) {
-                                allGradesForSubjectInGroup.add(student.getSubjectsWithGrades().get(subjectEnum));
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        if (allGradesForSubjectInGroup.isEmpty()) throw new EmptyCollectionException("There is no such subject in this group.");
-        return allGradesForSubjectInGroup;
-    }
-
-    public Collection<ArrayList<Integer>> getAllGradesForSubjectInUniversity(SubjectEnum subjectEnum) throws EmptyCollectionException {
-        Collection<ArrayList<Integer>> allGradesForSubjectInUniversity = new ArrayList<>();
-        for (Faculty faculty : listOfFaculties) {
-            for (Group group : faculty.getListOfGroups()) {
-                for (Student student : group.getListOfStudents()) {
-                    if (student.getSubjectsWithGrades().containsKey(subjectEnum)) {
-                        allGradesForSubjectInUniversity.add(student.getSubjectsWithGrades().get(subjectEnum));
-                    }
-                }
-            }
-        }
-        if (allGradesForSubjectInUniversity.isEmpty()) throw new EmptyCollectionException("There is no such subject in this university.");
-        return allGradesForSubjectInUniversity;
     }
 }
