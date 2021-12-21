@@ -5,14 +5,21 @@ import entity.Faculty;
 import entity.Group;
 import entity.Student;
 import entity.University;
-import utils.Utils;
 
 import java.util.*;
 
 public class UniversityMain {
 
     public static void main(String[] args) throws Exception {
+        University universityBNTU = createUniversity();
+        System.out.println("Average grade of the student: " + universityBNTU.getAverageGradeForStudent("Darrell", "Hale"));
+        System.out.println("Average grade on the " + SubjectEnum.MATH + " in the group: " +
+                universityBNTU.getAverageGradeForSubjectInGroup(SubjectEnum.MATH, GroupEnum.ECONOMIC_GROUP_1, FacultyEnum.ECONOMIC));
+        System.out.println("Average grade on the " + SubjectEnum.MATH + " in the university: " +
+                universityBNTU.getAverageGradeForSubjectInUniversity(SubjectEnum.MATH));
+    }
 
+    private static University createUniversity() throws Exception {
         List<Student> listOfCivilEngineeringGroup1 = Arrays.asList(
                 new Student("Katie", "Moody", FacultyEnum.CIVIL_ENGINEERING, GroupEnum.CIVIL_ENGINEERING_GROUP_1,
                         new HashMap<>(Map.of(
@@ -330,12 +337,6 @@ public class UniversityMain {
         Faculty EnergyFaculty = new Faculty(FacultyEnum.ENERGY, new ArrayList<>(Arrays.asList(EnergyGroup1, EnergyGroup2)));
         Faculty EconomicFaculty = new Faculty(FacultyEnum.ECONOMIC, new ArrayList<>(Arrays.asList(EconomicGroup1, EconomicGroup2)));
 
-        University universityBNTU = new University(new ArrayList<>(Arrays.asList(civilEngineeringFaculty, ArchitectureFaculty, InstrumentMakingFaculty, EnergyFaculty, EconomicFaculty)));
-
-        System.out.println("Average grade of the student: " + universityBNTU.getAverageGradeForStudent("Darrell", "Hale"));
-        System.out.println("Average grade on the " + SubjectEnum.MATH + " in the group: " +
-                universityBNTU.getAverageGradeForSubjectInGroup(SubjectEnum.MATH, GroupEnum.ECONOMIC_GROUP_1, FacultyEnum.ECONOMIC));
-        System.out.println("Average grade on the " + SubjectEnum.MATH + " in the university: " +
-                universityBNTU.getAverageGradeForSubjectInUniversity(SubjectEnum.MATH));
+        return new University(new ArrayList<>(Arrays.asList(civilEngineeringFaculty, ArchitectureFaculty, InstrumentMakingFaculty, EnergyFaculty, EconomicFaculty)));
     }
 }
