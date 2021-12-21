@@ -17,7 +17,8 @@ public class Group {
     private List<Student> listOfStudents;
 
     public Group(GroupEnum group, List<Student> listOfStudents) throws GroupHasNoStudentsException {
-        if (listOfStudents == null || listOfStudents.isEmpty()) throw new GroupHasNoStudentsException("There is no any students at the group.");
+        if (listOfStudents == null || listOfStudents.isEmpty())
+            throw new GroupHasNoStudentsException("There is no any students at the group.");
         this.group = group;
         this.listOfStudents = listOfStudents;
     }
@@ -40,7 +41,7 @@ public class Group {
 
     public Student getStudentByName(String firstName, String lastName) throws NoEntityException {
         for (Student student : listOfStudents) {
-            if (student.getFirstName().equals(firstName) && student.getLastName().equals(lastName)){
+            if (student.getFirstName().equals(firstName) && student.getLastName().equals(lastName)) {
                 return student;
             }
         }
@@ -49,7 +50,8 @@ public class Group {
 
     public double getAverageGradeForSubjectInGroup(SubjectEnum subjectEnum) throws NoEntityException {
         double averageGradeForSubjectInGroup = Utils.calculateAverageGrade(getAllGradesForSubjectInGroup(subjectEnum));
-        if (averageGradeForSubjectInGroup == 0.0) throw new NoEntityException("There is no such subject in Group: " + group.name() + ".");
+        if (averageGradeForSubjectInGroup == 0.0)
+            throw new NoEntityException("There is no such subject in Group: " + group.name() + ".");
         return averageGradeForSubjectInGroup;
     }
 

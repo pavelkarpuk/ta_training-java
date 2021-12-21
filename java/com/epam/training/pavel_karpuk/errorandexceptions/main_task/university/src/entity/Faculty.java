@@ -17,7 +17,8 @@ public class Faculty {
     private List<Group> listOfGroups;
 
     public Faculty(FacultyEnum faculty, List<Group> listOfGroups) throws FacultyHasNoGroupsException {
-        if (listOfGroups == null || listOfGroups.isEmpty()) throw new FacultyHasNoGroupsException("There is no any groups at the faculty.");
+        if (listOfGroups == null || listOfGroups.isEmpty())
+            throw new FacultyHasNoGroupsException("There is no any groups at the faculty.");
         this.faculty = faculty;
         this.listOfGroups = listOfGroups;
     }
@@ -50,7 +51,7 @@ public class Faculty {
         return student;
     }
 
-    public Group getGroupByName (GroupEnum groupEnum) throws NoEntityException {
+    public Group getGroupByName(GroupEnum groupEnum) throws NoEntityException {
         for (Group group : listOfGroups) {
             if (group.getGroup().equals(groupEnum)) {
                 return group;

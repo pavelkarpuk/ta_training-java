@@ -18,10 +18,12 @@ public class Student {
     private HashMap<SubjectEnum, ArrayList<Integer>> subjectsWithGrades;
 
     public Student(String firstName, String lastName, FacultyEnum faculty, GroupEnum group, HashMap<SubjectEnum, ArrayList<Integer>> subjectsWithGrades) throws StudentHasNoSubjectsException, WrongGradeException {
-        if (subjectsWithGrades == null || subjectsWithGrades.isEmpty()) throw new StudentHasNoSubjectsException("Student does not have any subjects.");
+        if (subjectsWithGrades == null || subjectsWithGrades.isEmpty())
+            throw new StudentHasNoSubjectsException("Student does not have any subjects.");
         for (SubjectEnum subject : subjectsWithGrades.keySet()) {
             for (Integer grade : subjectsWithGrades.get(subject)) {
-                if (grade < 0 || grade > 10) throw new WrongGradeException("The grade cannot be lower than 0 or higher than 10.");
+                if (grade < 0 || grade > 10)
+                    throw new WrongGradeException("The grade cannot be lower than 0 or higher than 10.");
             }
         }
         this.firstName = firstName;
@@ -71,7 +73,7 @@ public class Student {
         this.subjectsWithGrades = subjectsWithGrades;
     }
 
-    public double getAverageGrade(){
+    public double getAverageGrade() {
         return Utils.calculateAverageGrade(subjectsWithGrades.values());
     }
 
