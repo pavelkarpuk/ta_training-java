@@ -64,8 +64,8 @@ public class Faculty {
         return getGroupByName(groupEnum).getAverageGradeForSubjectInGroup(subjectEnum);
     }
 
-    public Collection<ArrayList<Integer>> getAllGradesForSubjectInFaculty(SubjectEnum subjectEnum) {
-        Collection<ArrayList<Integer>> allGradesForSubjectInFaculty = new ArrayList<>();
+    public Collection<List<Integer>> getAllGradesForSubjectInFaculty(SubjectEnum subjectEnum) {
+        Collection<List<Integer>> allGradesForSubjectInFaculty = new ArrayList<>();
         for (Group group : listOfGroups) {
             allGradesForSubjectInFaculty.addAll(group.getAllGradesForSubjectInGroup(subjectEnum));
         }

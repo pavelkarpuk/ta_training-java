@@ -56,8 +56,8 @@ public class University {
         return getFacultyByName(facultyEnum).getAverageGradeForSubjectInGroup(subjectEnum, groupEnum);
     }
 
-    public Collection<ArrayList<Integer>> getAllGradesForSubjectInUniversity(SubjectEnum subjectEnum) throws NoEntityException {
-        Collection<ArrayList<Integer>> allGradesForSubjectInUniversity = new ArrayList<>();
+    public Collection<List<Integer>> getAllGradesForSubjectInUniversity(SubjectEnum subjectEnum) throws NoEntityException {
+        Collection<List<Integer>> allGradesForSubjectInUniversity = new ArrayList<>();
         for (Faculty faculty : listOfFaculties) {
             allGradesForSubjectInUniversity.addAll(faculty.getAllGradesForSubjectInFaculty(subjectEnum));
         }

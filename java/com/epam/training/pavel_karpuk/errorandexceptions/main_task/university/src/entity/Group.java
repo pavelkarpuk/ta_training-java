@@ -55,8 +55,8 @@ public class Group {
         return averageGradeForSubjectInGroup;
     }
 
-    public Collection<ArrayList<Integer>> getAllGradesForSubjectInGroup(SubjectEnum subjectEnum) {
-        Collection<ArrayList<Integer>> allGradesForSubjectInGroup = new ArrayList<>();
+    public Collection<List<Integer>> getAllGradesForSubjectInGroup(SubjectEnum subjectEnum) {
+        Collection<List<Integer>> allGradesForSubjectInGroup = new ArrayList<>();
         for (Student student : getListOfStudents()) {
             if (student.getSubjectsWithGrades().containsKey(subjectEnum)) {
                 allGradesForSubjectInGroup.add(student.getSubjectsWithGrades().get(subjectEnum));

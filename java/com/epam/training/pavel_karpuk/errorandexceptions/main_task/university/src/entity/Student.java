@@ -15,9 +15,9 @@ public class Student {
     private String lastName;
     private FacultyEnum faculty;
     private GroupEnum group;
-    private HashMap<SubjectEnum, ArrayList<Integer>> subjectsWithGrades;
+    private Map<SubjectEnum, List<Integer>> subjectsWithGrades;
 
-    public Student(String firstName, String lastName, FacultyEnum faculty, GroupEnum group, HashMap<SubjectEnum, ArrayList<Integer>> subjectsWithGrades) throws StudentHasNoSubjectsException, WrongGradeException {
+    public Student(String firstName, String lastName, FacultyEnum faculty, GroupEnum group, Map<SubjectEnum, List<Integer>> subjectsWithGrades) throws StudentHasNoSubjectsException, WrongGradeException {
         if (subjectsWithGrades == null || subjectsWithGrades.isEmpty())
             throw new StudentHasNoSubjectsException("Student does not have any subjects.");
         for (SubjectEnum subject : subjectsWithGrades.keySet()) {
@@ -65,11 +65,11 @@ public class Student {
         this.group = group;
     }
 
-    public HashMap<SubjectEnum, ArrayList<Integer>> getSubjectsWithGrades() {
+    public Map<SubjectEnum, List<Integer>> getSubjectsWithGrades() {
         return subjectsWithGrades;
     }
 
-    public void setSubjectsWithGrades(HashMap<SubjectEnum, ArrayList<Integer>> subjectsWithGrades) {
+    public void setSubjectsWithGrades(Map<SubjectEnum, List<Integer>> subjectsWithGrades) {
         this.subjectsWithGrades = subjectsWithGrades;
     }
 

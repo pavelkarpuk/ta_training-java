@@ -1,11 +1,10 @@
 package utils;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 public class Utils {
-    public static double calculateAverageGrade(Collection<ArrayList<Integer>> CollectionOfAllGrades) {
+    public static double calculateAverageGrade(Collection<List<Integer>> CollectionOfAllGrades) {
         int sumOfGrades = 0;
         int numberOfGrades = 0;
         double averageGrade;
