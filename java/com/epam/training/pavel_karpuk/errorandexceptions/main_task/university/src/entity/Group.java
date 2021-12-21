@@ -17,7 +17,8 @@ public class Group {
     private List<Student> listOfStudents;
 
     public Group(GroupEnum group, List<Student> listOfStudents) throws GroupHasNoStudentsException {
-        if (listOfStudents == null || listOfStudents.isEmpty()) throw new GroupHasNoStudentsException("There is no any students at the group.");
+        if (listOfStudents == null || listOfStudents.isEmpty())
+            throw new GroupHasNoStudentsException("There is no any students at the group.");
         this.group = group;
         this.listOfStudents = listOfStudents;
     }
@@ -40,40 +41,28 @@ public class Group {
 
     public Student getStudentByName(String firstName, String lastName) throws NoEntityException {
         for (Student student : listOfStudents) {
-            if (student.getFirstName().equals(firstName) && student.getLastName().equals(lastName)){
+            if (student.getFirstName().equals(firstName) && student.getLastName().equals(lastName)) {
                 return student;
             }
         }
-        throw new NoEntityException();
+        throw new NoEntityException("No such student:" + firstName + " " + lastName + " in Group: " + group.name());
     }
 
     public double getAverageGradeForSubjectInGroup(SubjectEnum subjectEnum) throws NoEntityException {
         double averageGradeForSubjectInGroup = Utils.calculateAverageGrade(getAllGradesForSubjectInGroup(subjectEnum));
-        if (averageGradeForSubjectInGroup == 0.0) throw new NoEntityException("There is no such subject in Group: " + group.name() + ".");
+        if (averageGradeForSubjectInGroup == 0.0)
+            throw new NoEntityException("There is no such subject in Group: " + group.name() + ".");
         return averageGradeForSubjectInGroup;
     }
 
-    public Collection<ArrayList<Integer>> getAllGradesForSubjectInGroup(SubjectEnum subjectEnum) {
-        Collection<ArrayList<Integer>> allGradesForSubjectInGroup = new ArrayList<>();
+    public Collection<List<Integer>> getAllGradesForSubjectInGroup(SubjectEnum subjectEnum) {
+        Collection<List<Integer>> allGradesForSubjectInGroup = new ArrayList<>();
         for (Student student : getListOfStudents()) {
             if (student.getSubjectsWithGrades().containsKey(subjectEnum)) {
                 allGradesForSubjectInGroup.add(student.getSubjectsWithGrades().get(subjectEnum));
             }
         }
         return allGradesForSubjectInGroup;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Group group1 = (Group) o;
-        return group == group1.group && Objects.equals(listOfStudents, group1.listOfStudents);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(group, listOfStudents);
     }
 
     @Override
