@@ -35,7 +35,8 @@ public class University {
         for (Faculty faculty : listOfFaculties) {
             try {
                 student = faculty.getStudentByName(firstName, lastName);
-            } catch (NoEntityException ignored) {
+            } catch (NoEntityException e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
         if (student == null)

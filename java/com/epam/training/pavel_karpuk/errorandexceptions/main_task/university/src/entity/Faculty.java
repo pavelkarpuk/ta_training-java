@@ -44,10 +44,11 @@ public class Faculty {
         for (Group group : listOfGroups) {
             try {
                 student = group.getStudentByName(firstName, lastName);
-            } catch (NoEntityException ignored) {
+            } catch (NoEntityException e) {
+                System.out.println("Error: " + e.getMessage());
             }
         }
-        if (student == null) throw new NoEntityException();
+        if (student == null) throw new NoEntityException("No such student:" + firstName + " " + lastName + " in Faculty: " + faculty.name());
         return student;
     }
 

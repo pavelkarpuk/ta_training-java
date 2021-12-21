@@ -45,7 +45,7 @@ public class Group {
                 return student;
             }
         }
-        throw new NoEntityException();
+        throw new NoEntityException("No such student:" + firstName + " " + lastName + " in Group: " + group.name());
     }
 
     public double getAverageGradeForSubjectInGroup(SubjectEnum subjectEnum) throws NoEntityException {
