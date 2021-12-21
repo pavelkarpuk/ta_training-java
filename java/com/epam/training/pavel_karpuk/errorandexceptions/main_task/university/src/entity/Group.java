@@ -66,19 +66,6 @@ public class Group {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Group group1 = (Group) o;
-        return group == group1.group && Objects.equals(listOfStudents, group1.listOfStudents);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(group, listOfStudents);
-    }
-
-    @Override
     public String toString() {
         return "Group{" +
                 "group=" + group +

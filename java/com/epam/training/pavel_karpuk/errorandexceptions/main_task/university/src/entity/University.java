@@ -71,19 +71,6 @@ public class University {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        University that = (University) o;
-        return Objects.equals(listOfFaculties, that.listOfFaculties);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(listOfFaculties);
-    }
-
-    @Override
     public String toString() {
         return "University{" +
                 "listOfFaculties=" + listOfFaculties +
