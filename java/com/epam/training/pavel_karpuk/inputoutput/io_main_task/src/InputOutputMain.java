@@ -8,41 +8,53 @@ import java.util.Collections;
 import java.util.List;
 
 public class InputOutputMain {
+    private static String pathForTxtFile = "./inputoutput/io_main_task";
+    private static String nameTxtFile = "fileWithFoldersAndFiles.txt";
+
     public static void main(String[] args) throws IOException {
 //        Ввести с консоли path - условие задачи
 //        Scanner scanner = new Scanner(System.in);
 //        String path = scanner.nextLine();
-//        String path = "D:/Music"; //для тестов - директория
-        String path = "D:/Music/fileWithFoldersAndFiles.txt"; //для тестов - файл
-        String pathTreeFile = "./inputoutput/io_main_task/fileWithFoldersAndFiles.txt";
+        String path = "D:/Music"; //для тестов - директория
+//        String path = "D:/Music/fileWithFoldersAndFiles.txt"; //для тестов - файл
         File file = new File(path);
-        if (file.exists() && file.isDirectory()) {
-            File treeFile = new File("./inputoutput/io_main_task" + File.separator + "fileWithFoldersAndFiles.txt");
-            treeFile.delete();
-            treeFile.createNewFile();
-            Files.write(Path.of(pathTreeFile), Collections.singleton(path), StandardOpenOption.APPEND);
-            writeFoldersAndFilesToFile(file, pathTreeFile);
+        if (file.exists()) {
+            if (file.isDirectory()) {
+                File treeFile = new File(pathForTxtFile + File.separator + nameTxtFile);
+                treeFile.createNewFile();
+                Files.write(Path.of(treeFile.getPath()), Collections.singleton(path));
+                writeFoldersAndFilesToFile(file, treeFile.getPath());
+            }
+            if (file.isFile()) {
+                List<String> foldersAndFiles = readFile(path);
+                List<String> listFolders = deleteAllUnnecessaryCharFromNames(getListWithFolders(foldersAndFiles));
+                List<String> listFiles = deleteAllUnnecessaryCharFromNames(getListWithFiles(foldersAndFiles));
+                System.out.println("Number of folders: " + getNumberOfFolders(listFolders));
+                System.out.println("Number of files: " + getNumberOfFiles(listFiles));
+                System.out.println("Average number of files in a folder: " +
+                        getAverageNumberFilesInFolder(getNumberOfFolders(listFolders), getNumberOfFiles(listFiles)));
+                System.out.println("The average length of the file name: " + getAverageLengthFileName(listFiles));
+            }
+        } else {
+            System.out.println("There is no such path.");
         }
-        if (file.exists() && file.isFile()) {
-            List<String> foldersAndFiles = readFile(path);
-            List<String> listFolders = deleteAllUnnecessaryCharFromNames(getListWithFolders(foldersAndFiles));
-            List<String> listFiles = deleteAllUnnecessaryCharFromNames(getListWithFiles(foldersAndFiles));
-            System.out.println("Number of folders: " + getNumberOfFolders(listFolders));
-            System.out.println("Number of files: " + getNumberOfFiles(listFiles));
-            System.out.println("Average number of files in a folder: " +
-                    getAverageNumberFilesInFolder(getNumberOfFolders(listFolders), getNumberOfFiles(listFiles)));
-            System.out.println("The average length of the file name: " + getAverageLengthFileName(listFiles));
-        }
+    }
+
+    private static String getTextBeforeNameDirectoryOrFile(File file) {
+        String textBeforeName = null;
+        if (file.isFile()) textBeforeName = "|" + "\t\t";
+        if (file.isDirectory()) textBeforeName = "|" + "----";
+        return textBeforeName;
     }
 
     private static void writeFoldersAndFilesToFile(File directory, String pathTreeFile) throws IOException {
         for (File file : directory.listFiles()) {
             if (file.isFile()) {
-                String fileName = "|" + "\t\t" + file.getName();
+                String fileName = getTextBeforeNameDirectoryOrFile(file) + file.getName();
                 Files.write(Path.of(pathTreeFile), Collections.singleton(fileName), StandardOpenOption.APPEND);
             } else if (file.isDirectory()) {
                 Files.write(Path.of(pathTreeFile), Collections.singleton("|"), StandardOpenOption.APPEND);
-                String directoryName = "|" + "----" + file.getName();
+                String directoryName = getTextBeforeNameDirectoryOrFile(file) + file.getName();
                 Files.write(Path.of(pathTreeFile), Collections.singleton(directoryName), StandardOpenOption.APPEND);
                 writeFoldersAndFilesToFile(file, pathTreeFile);
             }
