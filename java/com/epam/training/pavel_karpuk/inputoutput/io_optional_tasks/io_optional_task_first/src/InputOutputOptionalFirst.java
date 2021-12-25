@@ -28,39 +28,39 @@ public class InputOutputOptionalFirst {
         return randomIntArray;
     }
 
-    private static List<String> convertIntArrayToStringList(int[] randomIntArray) {
-        List<String> randomStringList = new ArrayList<>();
-        for (int number : randomIntArray) {
-            randomStringList.add(String.valueOf(number));
+    private static List<String> convertIntArrayToStringList(int[] intArray) {
+        List<String> stringList = new ArrayList<>();
+        for (int number : intArray) {
+            stringList.add(String.valueOf(number));
         }
-        return randomStringList;
+        return stringList;
     }
 
-    private static void writeListToFile(List<String> randomStringList, File file) throws IOException {
-        Files.write(Path.of(file.getPath()), randomStringList);
+    private static void writeListToFile(List<String> stringList, File file) throws IOException {
+        Files.write(Path.of(file.getPath()), stringList);
     }
 
     private static List<String> getListWithNumbersFromFile(File file) throws IOException {
         return Files.readAllLines(Path.of(file.getPath()));
     }
 
-    private static List<Integer> convertStringListToIntegerList(List<String> randomStringList) {
-        List<Integer> randomIntList = new ArrayList<>();
-        for (String number : randomStringList) {
-            randomIntList.add(Integer.valueOf(number));
+    private static List<Integer> convertStringListToIntegerList(List<String> stringList) {
+        List<Integer> intList = new ArrayList<>();
+        for (String number : stringList) {
+            intList.add(Integer.valueOf(number));
         }
-        return randomIntList;
+        return intList;
     }
 
-    private static void sortListInAscendingOrder(List<Integer> randomIntList) {
-        Collections.sort(randomIntList);
+    private static void sortListInAscendingOrder(List<Integer> intList) {
+        Collections.sort(intList);
     }
 
-    private static List<String> convertIntegerListToStringList(List<Integer> randomIntList) {
-        List<String> randomStringList = new ArrayList<>();
-        for (Integer number : randomIntList) {
-            randomStringList.add(String.valueOf(number));
+    private static List<String> convertIntegerListToStringList(List<Integer> intList) {
+        List<String> stringList = new ArrayList<>();
+        for (Integer number : intList) {
+            stringList.add(String.valueOf(number));
         }
-        return randomStringList;
+        return stringList;
     }
 }
