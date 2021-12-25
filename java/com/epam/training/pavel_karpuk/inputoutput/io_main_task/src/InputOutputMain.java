@@ -15,8 +15,8 @@ public class InputOutputMain {
 //        Ввести с консоли path - условие задачи
 //        Scanner scanner = new Scanner(System.in);
 //        String path = scanner.nextLine();
-        String path = "D:/Music"; //для тестов - директория
-//        String path = "D:/Music/fileWithFoldersAndFiles.txt"; //для тестов - файл
+//        String path = "D:/Music"; //для тестов - директория
+        String path = "D:/Music/fileWithFoldersAndFiles.txt"; //для тестов - файл
         File file = new File(path);
         if (file.exists()) {
             if (file.isDirectory()) {
@@ -31,7 +31,7 @@ public class InputOutputMain {
                 List<String> listFiles = deleteAllUnnecessaryCharFromNames(getListWithFiles(foldersAndFiles));
                 System.out.println("Number of folders: " + getNumberOfFolders(listFolders));
                 System.out.println("Number of files: " + getNumberOfFiles(listFiles));
-                System.out.println("Average number of files in a folder: " +
+                System.out.println("Average number of files in the folder: " +
                         getAverageNumberFilesInFolder(getNumberOfFolders(listFolders), getNumberOfFiles(listFiles)));
                 System.out.println("The average length of the file name: " + getAverageLengthFileName(listFiles));
             }
