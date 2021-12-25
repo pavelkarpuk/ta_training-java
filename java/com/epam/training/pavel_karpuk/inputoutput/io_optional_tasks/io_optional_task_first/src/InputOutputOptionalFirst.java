@@ -5,9 +5,12 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class InputOutputOptionalFirst {
+    private static String pathForNewDirectory = "./inputoutput/io_optional_tasks/io_optional_task_first/data";
+    private static String nameTxtFile = "firstOptionalTask.txt";
+
     public static void main(String[] args) throws IOException {
-        File directory = new File("./inputoutput/io_optional_tasks/io_optional_task_first/data");
-        File file = new File(directory, "firstOptionalTask.txt");
+        File directory = new File(pathForNewDirectory);
+        File file = new File(directory, nameTxtFile);
         directory.mkdir();
         file.createNewFile();
 
