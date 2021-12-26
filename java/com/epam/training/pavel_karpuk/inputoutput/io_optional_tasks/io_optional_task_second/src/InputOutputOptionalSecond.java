@@ -26,13 +26,12 @@ public class InputOutputOptionalSecond {
         return Files.readAllLines(Path.of(path));
     }
 
-    private static List<String> getListWithModifyAccessLevels(List<String> javaProgram) {
-        for (String line : javaProgram) {
+    private static List<String> getListWithModifyAccessLevels(List<String> list) {
+        for (String line : list) {
             if (line.contains(replacedWord))
-                javaProgram.set(javaProgram.indexOf(line), refactoringOfString(replaceWordInString(line)));
+                list.set(list.indexOf(line), refactoringOfString(replaceWordInString(line)));
         }
-        return javaProgram;
-
+        return list;
     }
 
     private static String replaceWordInString(String line) {
@@ -45,8 +44,8 @@ public class InputOutputOptionalSecond {
 
     private static String refactoringOfString(String line) {
         line = line.replace(",", "")
-                   .replace("[", "")
-                   .replace("]", "");
+                .replace("[", "")
+                .replace("]", "");
         return line;
     }
 
