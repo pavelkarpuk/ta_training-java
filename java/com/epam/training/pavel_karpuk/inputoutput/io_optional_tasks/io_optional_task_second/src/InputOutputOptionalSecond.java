@@ -6,11 +6,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InputOutputOptionalSecond {
-    private static String pathForNewDirectory = "./inputoutput/io_optional_tasks/io_optional_task_second/data";
-    private static String nameOfNewJavaProgram = "secondOptionalTask.java";
-    private static String pathJavaProgram = "./inputoutput/io_optional_tasks/io_optional_task_second/src/InputOutputOptionalSecond.java";
-    private static String replacedWord = "public";
-    private static String replacementWord = "private";
+    private static final String pathForNewDirectory = "./inputoutput/io_optional_tasks/io_optional_task_second/data";
+    private static final String nameOfNewJavaProgram = "secondOptionalTask.java";
+    private static final String pathJavaProgram = "./inputoutput/io_optional_tasks/io_optional_task_second/src/InputOutputOptionalSecond.java";
+    private static final String replacedWord = "public";
+    private static final String replacementWord = "private";
 
     public static void main(String[] args) throws IOException {
         File directory = new File(pathForNewDirectory);
@@ -18,12 +18,12 @@ public class InputOutputOptionalSecond {
         directory.mkdir();
         file.createNewFile();
 
-        List<String> textOfJavaProgram = readFile(pathJavaProgram);
+        List<String> textOfJavaProgram = readFile();
         writeListToFile(getListWithModifyAccessLevels(textOfJavaProgram), file);
     }
 
-    private static List<String> readFile(String path) throws IOException {
-        return Files.readAllLines(Path.of(path));
+    private static List<String> readFile() throws IOException {
+        return Files.readAllLines(Path.of(InputOutputOptionalSecond.pathJavaProgram));
     }
 
     private static List<String> getListWithModifyAccessLevels(List<String> list) {
