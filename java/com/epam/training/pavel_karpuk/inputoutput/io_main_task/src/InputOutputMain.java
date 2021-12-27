@@ -3,20 +3,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class InputOutputMain {
-    private static String pathForTxtFile = "./inputoutput/io_main_task";
-    private static String nameTxtFile = "fileWithFoldersAndFiles.txt";
+    private static final String pathForTxtFile = "./inputoutput/io_main_task";
+    private static final String nameTxtFile = "fileWithFoldersAndFiles.txt";
 
     public static void main(String[] args) throws IOException {
-//        Ввести с консоли path - условие задачи
-//        Scanner scanner = new Scanner(System.in);
-//        String path = scanner.nextLine();
-//        String path = "D:/Music"; //для тестов - директория
-        String path = "D:/Music/fileWithFoldersAndFiles.txt"; //для тестов - файл
+        Scanner scanner = new Scanner(System.in);
+        String path = scanner.nextLine();
         File file = new File(path);
         if (file.exists()) {
             if (file.isDirectory()) {
@@ -48,7 +43,7 @@ public class InputOutputMain {
     }
 
     private static void writeFoldersAndFilesToFile(File directory, String pathTreeFile) throws IOException {
-        for (File file : directory.listFiles()) {
+        for (File file : Objects.requireNonNull(directory.listFiles())) {
             if (file.isFile()) {
                 String fileName = getTextBeforeNameDirectoryOrFile(file) + file.getName();
                 Files.write(Path.of(pathTreeFile), Collections.singleton(fileName), StandardOpenOption.APPEND);
