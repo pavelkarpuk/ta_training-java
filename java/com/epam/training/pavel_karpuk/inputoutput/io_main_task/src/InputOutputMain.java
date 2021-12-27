@@ -6,8 +6,8 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class InputOutputMain {
-    private static final String pathForTxtFile = "./inputoutput/io_main_task";
-    private static final String nameTxtFile = "fileWithFoldersAndFiles.txt";
+    private static String pathForTxtFile = "./inputoutput/io_main_task";
+    private static String nameTxtFile = "fileWithFoldersAndFiles.txt";
 
     public static void main(String[] args) throws IOException {
         Scanner scanner = new Scanner(System.in);
@@ -15,10 +15,10 @@ public class InputOutputMain {
         File file = new File(path);
         if (file.exists()) {
             if (file.isDirectory()) {
-                File treeFile = new File(pathForTxtFile + File.separator + nameTxtFile);
-                treeFile.createNewFile();
-                Files.write(Path.of(treeFile.getPath()), Collections.singleton(path));
-                writeFoldersAndFilesToFile(file, treeFile.getPath());
+                File fileLikeTree = new File(pathForTxtFile + File.separator + nameTxtFile);
+                fileLikeTree.createNewFile();
+                Files.write(Path.of(fileLikeTree.getPath()), Collections.singleton(path));
+                writeFoldersAndFilesToFileLikeTree(file, fileLikeTree.getPath());
             }
             if (file.isFile()) {
                 List<String> foldersAndFiles = readFile(path);
@@ -42,16 +42,16 @@ public class InputOutputMain {
         return textBeforeName;
     }
 
-    private static void writeFoldersAndFilesToFile(File directory, String pathTreeFile) throws IOException {
+    private static void writeFoldersAndFilesToFileLikeTree(File directory, String path) throws IOException {
         for (File file : Objects.requireNonNull(directory.listFiles())) {
             if (file.isFile()) {
                 String fileName = getTextBeforeNameDirectoryOrFile(file) + file.getName();
-                Files.write(Path.of(pathTreeFile), Collections.singleton(fileName), StandardOpenOption.APPEND);
+                Files.write(Path.of(path), Collections.singleton(fileName), StandardOpenOption.APPEND);
             } else if (file.isDirectory()) {
-                Files.write(Path.of(pathTreeFile), Collections.singleton("|"), StandardOpenOption.APPEND);
+                Files.write(Path.of(path), Collections.singleton("|"), StandardOpenOption.APPEND);
                 String directoryName = getTextBeforeNameDirectoryOrFile(file) + file.getName();
-                Files.write(Path.of(pathTreeFile), Collections.singleton(directoryName), StandardOpenOption.APPEND);
-                writeFoldersAndFilesToFile(file, pathTreeFile);
+                Files.write(Path.of(path), Collections.singleton(directoryName), StandardOpenOption.APPEND);
+                writeFoldersAndFilesToFileLikeTree(file, path);
             }
         }
     }
