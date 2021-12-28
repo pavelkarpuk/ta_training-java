@@ -3,35 +3,43 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Scanner;
 
 public class InputOutputMain {
-    private static String pathForTxtFile = "./inputoutput/io_main_task";
-    private static String nameTxtFile = "fileWithFoldersAndFiles.txt";
+    private static final String PATH_FOR_TXT_FILE = "./inputoutput/io_main_task";
+    private static final String NAME_TXT_FILE = "fileWithFoldersAndFiles.txt";
 
-    public static void main(String[] args) throws IOException {
-        Scanner scanner = new Scanner(System.in);
-        String path = scanner.nextLine();
-        File file = new File(path);
-        if (file.exists()) {
-            if (file.isDirectory()) {
-                File fileLikeTree = new File(pathForTxtFile + File.separator + nameTxtFile);
-                fileLikeTree.createNewFile();
-                Files.write(Path.of(fileLikeTree.getPath()), Collections.singleton(path));
-                writeFoldersAndFilesToFileLikeTree(file, fileLikeTree.getPath());
+    public static void main(String[] args) {
+        try (Scanner scanner = new Scanner(System.in)) {
+            String path = scanner.nextLine();
+            File file = new File(path);
+            if (file.exists()) {
+                if (file.isDirectory()) {
+                    File fileLikeTree = new File(PATH_FOR_TXT_FILE + File.separator + NAME_TXT_FILE);
+                    try {
+                        Files.write(Path.of(fileLikeTree.getPath()), Collections.singleton(path));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    writeFoldersAndFilesToFileLikeTree(file, fileLikeTree.getPath());
+                }
+                if (file.isFile()) {
+                    List<String> foldersAndFiles = readFile(path);
+                    List<String> listFolders = deleteAllUnnecessaryCharFromNames(getListWithFolders(foldersAndFiles));
+                    List<String> listFiles = deleteAllUnnecessaryCharFromNames(getListWithFiles(foldersAndFiles));
+                    System.out.println("Number of folders: " + getNumberOfFolders(listFolders));
+                    System.out.println("Number of files: " + getNumberOfFiles(listFiles));
+                    System.out.println("Average number of files in the folder: " +
+                            getAverageNumberFilesInFolder(getNumberOfFolders(listFolders), getNumberOfFiles(listFiles)));
+                    System.out.println("The average length of the file name: " + getAverageLengthFileName(listFiles));
+                }
+            } else {
+                System.out.println("There is no such path.");
             }
-            if (file.isFile()) {
-                List<String> foldersAndFiles = readFile(path);
-                List<String> listFolders = deleteAllUnnecessaryCharFromNames(getListWithFolders(foldersAndFiles));
-                List<String> listFiles = deleteAllUnnecessaryCharFromNames(getListWithFiles(foldersAndFiles));
-                System.out.println("Number of folders: " + getNumberOfFolders(listFolders));
-                System.out.println("Number of files: " + getNumberOfFiles(listFiles));
-                System.out.println("Average number of files in the folder: " +
-                        getAverageNumberFilesInFolder(getNumberOfFolders(listFolders), getNumberOfFiles(listFiles)));
-                System.out.println("The average length of the file name: " + getAverageLengthFileName(listFiles));
-            }
-        } else {
-            System.out.println("There is no such path.");
         }
     }
 
@@ -42,22 +50,39 @@ public class InputOutputMain {
         return textBeforeName;
     }
 
-    private static void writeFoldersAndFilesToFileLikeTree(File directory, String path) throws IOException {
+    private static void writeFoldersAndFilesToFileLikeTree(File directory, String path) {
         for (File file : Objects.requireNonNull(directory.listFiles())) {
             if (file.isFile()) {
                 String fileName = getTextBeforeNameDirectoryOrFile(file) + file.getName();
-                Files.write(Path.of(path), Collections.singleton(fileName), StandardOpenOption.APPEND);
+                try {
+                    Files.write(Path.of(path), Collections.singleton(fileName), StandardOpenOption.APPEND);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             } else if (file.isDirectory()) {
-                Files.write(Path.of(path), Collections.singleton("|"), StandardOpenOption.APPEND);
+                try {
+                    Files.write(Path.of(path), Collections.singleton("|"), StandardOpenOption.APPEND);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 String directoryName = getTextBeforeNameDirectoryOrFile(file) + file.getName();
-                Files.write(Path.of(path), Collections.singleton(directoryName), StandardOpenOption.APPEND);
+                try {
+                    Files.write(Path.of(path), Collections.singleton(directoryName), StandardOpenOption.APPEND);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 writeFoldersAndFilesToFileLikeTree(file, path);
             }
         }
     }
 
-    private static List<String> readFile(String path) throws IOException {
-        return Files.readAllLines(Path.of(path));
+    private static List<String> readFile(String path) {
+        try {
+            return Files.readAllLines(Path.of(path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static List<String> getListWithFolders(List<String> foldersAndFiles) {
