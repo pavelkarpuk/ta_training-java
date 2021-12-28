@@ -2,17 +2,19 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
 
 public class InputOutputOptionalFirst {
-    private static String pathForNewDirectory = "./inputoutput/io_optional_tasks/io_optional_task_first/data";
-    private static String nameTxtFile = "firstOptionalTask.txt";
+    private static final String PATH_FOR_NEW_DIRECTORY = "./inputoutput/io_optional_tasks/io_optional_task_first/data";
+    private static final String NAME_TXT_FILE = "firstOptionalTask.txt";
 
-    public static void main(String[] args) throws IOException {
-        File directory = new File(pathForNewDirectory);
-        File file = new File(directory, nameTxtFile);
+    public static void main(String[] args) {
+        File directory = new File(PATH_FOR_NEW_DIRECTORY);
+        File file = new File(directory, NAME_TXT_FILE);
         directory.mkdir();
-        file.createNewFile();
 
         writeListToFile(convertIntArrayToStringList(getRandomIntArray()), file);
         List<String> randomStringList = getListWithNumbersFromFile(file);
@@ -39,12 +41,21 @@ public class InputOutputOptionalFirst {
         return stringList;
     }
 
-    private static void writeListToFile(List<String> stringList, File file) throws IOException {
-        Files.write(Path.of(file.getPath()), stringList);
+    private static void writeListToFile(List<String> stringList, File file) {
+        try {
+            Files.write(Path.of(file.getPath()), stringList);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
-    private static List<String> getListWithNumbersFromFile(File file) throws IOException {
-        return Files.readAllLines(Path.of(file.getPath()));
+    private static List<String> getListWithNumbersFromFile(File file) {
+        try {
+            return Files.readAllLines(Path.of(file.getPath()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static List<Integer> convertStringListToIntegerList(List<String> stringList) {
