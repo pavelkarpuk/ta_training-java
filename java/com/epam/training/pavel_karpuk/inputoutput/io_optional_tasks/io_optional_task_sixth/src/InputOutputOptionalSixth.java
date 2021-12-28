@@ -6,20 +6,26 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputOutputOptionalSixth {
-    private static String pathFile = "./inputoutput/io_optional_tasks/io_optional_task_sixth/data/text.txt";
+    private static final String PATH_FILE = "./inputoutput/io_optional_tasks/io_optional_task_sixth/data/text.txt";
 
-    public static void main(String[] args) throws IOException {
-        List<String> text = readFile(pathFile);
-        Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println("Enter one of the data types: Character, String, Integer, Double.");
-            String dataType = scanner.nextLine();
-            System.out.println(getListWithSetDataType(dataType, text));
+    public static void main(String[] args) {
+        List<String> text = readFile();
+        try (Scanner scanner = new Scanner(System.in)) {
+            while (true) {
+                System.out.println("Enter one of the data types: Character, String, Integer, Double.");
+                String dataType = scanner.nextLine();
+                System.out.println(getListWithSetDataType(dataType, text));
+            }
         }
     }
 
-    private static List<String> readFile(String path) throws IOException {
-        return Files.readAllLines(Path.of(path));
+    private static List<String> readFile() {
+        try {
+            return Files.readAllLines(Path.of(InputOutputOptionalSixth.PATH_FILE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static List<String> getListWithSetDataType(String dataType, List<String> text) {
