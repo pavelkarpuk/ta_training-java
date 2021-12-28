@@ -6,17 +6,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class InputOutputOptionalTenth {
-    private static String pathFile = "./inputoutput/io_optional_tasks/io_optional_task_tenth/data/text.txt";
+    private static final String PATH_FILE = "./inputoutput/io_optional_tasks/io_optional_task_tenth/data/text.txt";
 
-    public static void main(String[] args) throws IOException {
-        File file = new File(pathFile);
+    public static void main(String[] args) {
+        File file = new File(PATH_FILE);
 
-        List<String> text = readFile(pathFile);
+        List<String> text = readFile();
         writeListToFile(getListWithSwapFirstAndLastWordInEachRow(text), file);
     }
 
-    private static List<String> readFile(String path) throws IOException {
-        return Files.readAllLines(Path.of(path));
+    private static List<String> readFile() {
+        try {
+            return Files.readAllLines(Path.of(InputOutputOptionalTenth.PATH_FILE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static List<String> getListWithSwapFirstAndLastWordInEachRow(List<String> list) {
@@ -41,7 +46,11 @@ public class InputOutputOptionalTenth {
         return line;
     }
 
-    private static void writeListToFile(List<String> list, File file) throws IOException {
-        Files.write(Path.of(file.getPath()), list);
+    private static void writeListToFile(List<String> list, File file) {
+        try {
+            Files.write(Path.of(file.getPath()), list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
