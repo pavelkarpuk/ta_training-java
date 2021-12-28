@@ -5,22 +5,26 @@ import java.nio.file.Path;
 import java.util.List;
 
 public class InputOutputOptionalThird {
-    private static String pathForNewDirectory = "./inputoutput/io_optional_tasks/io_optional_task_third/data";
-    private static String nameOfNewJavaProgram = "thirdOptionalTask.java";
-    private static String pathJavaProgram = "./inputoutput/io_optional_tasks/io_optional_task_third/src/InputOutputOptionalThird.java";
+    private static final String PATH_FOR_NEW_DIRECTORY = "./inputoutput/io_optional_tasks/io_optional_task_third/data";
+    private static final String NAME_OF_NEW_JAVA_PROGRAM = "thirdOptionalTask.java";
+    private static final String PATH_JAVA_PROGRAM = "./inputoutput/io_optional_tasks/io_optional_task_third/src/InputOutputOptionalThird.java";
 
-    public static void main(String[] args) throws IOException {
-        File directory = new File(pathForNewDirectory);
-        File file = new File(directory, nameOfNewJavaProgram);
+    public static void main(String[] args) {
+        File directory = new File(PATH_FOR_NEW_DIRECTORY);
+        File file = new File(directory, NAME_OF_NEW_JAVA_PROGRAM);
         directory.mkdir();
-        file.createNewFile();
 
-        List<String> textOfJavaProgram = readFile(pathJavaProgram);
+        List<String> textOfJavaProgram = readFile();
         writeListToFile(getListWithReverseOrderOfEachString(textOfJavaProgram), file);
     }
 
-    private static List<String> readFile(String path) throws IOException {
-        return Files.readAllLines(Path.of(path));
+    private static List<String> readFile() {
+        try {
+            return Files.readAllLines(Path.of(InputOutputOptionalThird.PATH_JAVA_PROGRAM));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static List<String> getListWithReverseOrderOfEachString(List<String> list) {
@@ -30,7 +34,11 @@ public class InputOutputOptionalThird {
         return list;
     }
 
-    private static void writeListToFile(List<String> list, File file) throws IOException {
-        Files.write(Path.of(file.getPath()), list);
+    private static void writeListToFile(List<String> list, File file) {
+        try {
+            Files.write(Path.of(file.getPath()), list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
