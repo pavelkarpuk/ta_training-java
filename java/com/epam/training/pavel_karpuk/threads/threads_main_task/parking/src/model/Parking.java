@@ -1,3 +1,5 @@
+package model;
+
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 

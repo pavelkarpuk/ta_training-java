@@ -1,3 +1,5 @@
+package model;
+
 import java.util.Random;
 
 public class Car implements Runnable {
@@ -26,7 +28,9 @@ public class Car implements Runnable {
                 parking.releaseSpot(carNumber);
             }
         } else {
-            Thread.currentThread().interrupt();
+            if (!Thread.currentThread().isInterrupted()) {
+                Thread.currentThread().interrupt();
+            }
         }
     }
 }
