@@ -80,11 +80,11 @@ public class HardcoreTest {
         driver = null;
     }
 
-    public void openNewTab() {
+    private void openNewTab() {
         driver.switchTo().newWindow(WindowType.TAB);
     }
 
-    public void switchBetweenTabs(int tabNumber) {
+    private void switchBetweenTabs(int tabNumber) {
         driver.switchTo().window(new ArrayList<>(driver.getWindowHandles()).get(tabNumber));
     }
 }

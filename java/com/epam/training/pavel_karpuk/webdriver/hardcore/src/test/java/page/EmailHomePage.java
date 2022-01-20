@@ -2,8 +2,9 @@ package page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
+import static utils.CommonUtils.waitForElementClickable;
+import static utils.CommonUtils.waitForElementLocated;
 
 public class EmailHomePage extends AbstractPage {
 
@@ -20,7 +21,7 @@ public class EmailHomePage extends AbstractPage {
     public String getEstimatedMonthlyCost() {
         refreshEmailHomePage();
         goToChildFrame();
-        waiterElementLocated(estimatedMonthlyCost);
+        waitForElementLocated(estimatedMonthlyCost, driver);
         return driver.findElement(By.xpath(estimatedMonthlyCost)).getText();
     }
 
@@ -29,18 +30,8 @@ public class EmailHomePage extends AbstractPage {
     }
 
     private void refreshEmailHomePage() {
-        waiterElementClickable(refreshEmailBox);
+        waitForElementClickable(refreshEmailBox, driver);
         driver.findElement(By.xpath(refreshEmailBox)).click();
-    }
-
-    private void waiterElementLocated(String xpath) {
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
-    }
-
-    private void waiterElementClickable(String xpath) {
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
     }
 
     @Override

@@ -1,15 +1,17 @@
 package page;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.CommonUtils;
+
+import static utils.CommonUtils.*;
 
 public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     private String frameFirst = "//*[@id='cloud-site']/devsite-iframe/iframe";
     private String frameSecond = "//*[@id='myFrame']";
+
+    private String pageLoadingLocator = "//*[@template='page']";
 
     private String computeEngineButton = "//div[@title='Compute Engine']/parent::div[contains(@class,'buttons')]";
 
@@ -60,7 +62,7 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     @Override
     public GoogleCloudPlatformPricingCalculatorHome openPage() {
-        waiterElementLocated("//*[@template='page']");
+        waitForElementLocated(pageLoadingLocator, driver);
         return this;
     }
 
@@ -82,28 +84,28 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectOperatingSystem() {
         driver.findElement(By.xpath(operatingSystemDropdown)).click();
-        waiterElementClickable(selectFreeOperatingSystem);
+        waitForElementClickable(selectFreeOperatingSystem, driver);
         driver.findElement(By.xpath(selectFreeOperatingSystem)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectMachineClass() {
         driver.findElement(By.xpath(machineClassDropdown)).click();
-        waiterElementClickable(selectRegularMachineClass);
+        waitForElementClickable(selectRegularMachineClass, driver);
         driver.findElement(By.xpath(selectRegularMachineClass)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectSeries() {
         driver.findElement(By.xpath(seriesDropdown)).click();
-        waiterElementClickable(selectN1Series);
+        waitForElementClickable(selectN1Series, driver);
         driver.findElement(By.xpath(selectN1Series)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectMachineType() {
         driver.findElement(By.xpath(machineTypeDropdown)).click();
-        waiterElementClickable(selectStandard8MachineType);
+        waitForElementClickable(selectStandard8MachineType, driver);
         driver.findElement(By.xpath(selectStandard8MachineType)).click();
         return this;
     }
@@ -115,35 +117,35 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectGPUType() {
         driver.findElement(By.xpath(gpuTypeDropdown)).click();
-        waiterElementClickable(selectTeslaV100GPUType);
+        waitForElementClickable(selectTeslaV100GPUType, driver);
         driver.findElement(By.xpath(selectTeslaV100GPUType)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectNumberOfGPU() {
         driver.findElement(By.xpath(numberOfGPUDropdown)).click();
-        waiterElementClickable(select1NumberOfGPU);
+        waitForElementClickable(select1NumberOfGPU, driver);
         driver.findElement(By.xpath(select1NumberOfGPU)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectLocalSSD() {
         driver.findElement(By.xpath(localSSDDropdown)).click();
-        waiterElementClickable(select2x375GbLocalSSD);
+        waitForElementClickable(select2x375GbLocalSSD, driver);
         driver.findElement(By.xpath(select2x375GbLocalSSD)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectDatacenterLocation() {
         driver.findElement(By.xpath(datacenterLocationDropdown)).click();
-        waiterElementClickable(selectFrankfurtLocation);
+        waitForElementClickable(selectFrankfurtLocation, driver);
         driver.findElement(By.xpath(selectFrankfurtLocation)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectCommittedUsage() {
         driver.findElement(By.xpath(committedUsageDropdown)).click();
-        waiterElementClickable(select1YearCommittedUsage);
+        waitForElementClickable(select1YearCommittedUsage, driver);
         driver.findElement(By.xpath(select1YearCommittedUsage)).click();
         return this;
     }
@@ -154,7 +156,7 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectEmailEstimate() {
-        waiterElementClickable(emailEstimateButton);
+        waitForElementClickable(emailEstimateButton, driver);
         driver.findElement(By.xpath(emailEstimateButton)).click();
         return this;
     }
@@ -165,38 +167,15 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorHome sendEmailWithEstimate() {
-        scrollToElement(sendEmailButton);
-        waiterElementClickable(sendEmailButton);
+        scrollToElementUp(sendEmailButton, driver);
+        waitForElementClickable(sendEmailButton, driver);
         driver.findElement(By.xpath(sendEmailButton)).click();
         return this;
     }
 
     public String getTotalEstimatedCost() {
-        scrollToElement(totalEstimatedCost);
-        waiterElementLocated(totalEstimatedCost);
-        return trimUnnecessaryTextFromTotalEstimatedCost(driver.findElement((By.xpath(totalEstimatedCost))).getText());
-    }
-
-    private String trimUnnecessaryTextFromTotalEstimatedCost(String cost) {
-        String unnecessaryTextBeforeCost = "Total Estimated Cost: ";
-        String unnecessaryTextAfterCost = " per 1 month";
-        cost = cost.replace(unnecessaryTextBeforeCost, "");
-        cost = cost.replace(unnecessaryTextAfterCost, "");
-        return cost;
-    }
-
-    private void waiterElementClickable(String xpath) {
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-    }
-
-    private void waiterElementLocated(String xpath) {
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
-    }
-
-    private void scrollToElement(String xpath) {
-        ((JavascriptExecutor) driver)
-                .executeScript("arguments[0].scrollIntoView(false);", driver.findElement(By.xpath(xpath)));
+        scrollToElementUp(totalEstimatedCost, driver);
+        waitForElementLocated(totalEstimatedCost, driver);
+        return CommonUtils.trimUnnecessaryTextFromTotalEstimatedCost(driver.findElement((By.xpath(totalEstimatedCost))).getText());
     }
 }

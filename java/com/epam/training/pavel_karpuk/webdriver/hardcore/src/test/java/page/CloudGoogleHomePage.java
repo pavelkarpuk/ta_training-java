@@ -28,6 +28,6 @@ public class CloudGoogleHomePage extends AbstractPage {
     public CloudGoogleSearchPage searchForTerm(String searchTerm) {
         searchButton.click();
         driver.findElement(By.xpath(searchInput)).sendKeys(searchTerm + Keys.ENTER);
-        return new CloudGoogleSearchPage(driver, searchTerm);
+        return new CloudGoogleSearchPage(driver);
     }
 }
