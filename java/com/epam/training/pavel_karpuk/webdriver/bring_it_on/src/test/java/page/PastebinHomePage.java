@@ -1,10 +1,10 @@
 package page;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import utils.CommonUtils;
 
 public class PastebinHomePage extends AbstractPage {
 
@@ -39,20 +39,20 @@ public class PastebinHomePage extends AbstractPage {
     }
 
     public PastebinHomePage writeCodeToTextArea(String code) {
-        scrollToElement(textAreaForCode);
+        CommonUtils.scrollToElement(textAreaForCode, driver);
         textAreaForCode.sendKeys(code);
         return this;
     }
 
     public PastebinHomePage selectSyntaxHighlighting() {
-        scrollToElement(syntaxHighlightingDropdown);
+        CommonUtils.scrollToElement(syntaxHighlightingDropdown, driver);
         syntaxHighlightingDropdown.click();
         driver.findElement(By.xpath(selectBashSyntaxHighlighting)).click();
         return this;
     }
 
     public PastebinHomePage selectPasteExpiration() {
-        scrollToElement(pasteExpirationDropdown);
+        CommonUtils.scrollToElement(pasteExpirationDropdown, driver);
         pasteExpirationDropdown.click();
         driver.findElement(By.xpath(select10MinutesPasteExpiration)).click();
         return this;
@@ -66,10 +66,5 @@ public class PastebinHomePage extends AbstractPage {
     public PastebinPageWithPaste createNewPaste() {
         createNewPasteButton.click();
         return new PastebinPageWithPaste(driver);
-    }
-
-    private void scrollToElement(WebElement element) {
-        ((JavascriptExecutor) driver)
-                .executeScript("arguments[0].scrollIntoView(true); window.scrollBy(0, -window.innerHeight / 4);", element);
     }
 }

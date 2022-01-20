@@ -3,8 +3,7 @@ package page;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.CommonUtils;
 
 public class PastebinPageWithPaste extends AbstractPage {
 
@@ -17,17 +16,17 @@ public class PastebinPageWithPaste extends AbstractPage {
     }
 
     public String getSyntaxHighlighting() {
-        waiter(syntaxHighlightingName);
+        CommonUtils.waitForElementLocated(syntaxHighlightingName, driver);
         return driver.findElement(By.xpath(syntaxHighlightingName)).getText().trim();
     }
 
     public String getPageTitleName() {
-        waiter(pageTitleName);
+        CommonUtils.waitForElementLocated(pageTitleName, driver);
         return driver.findElement(By.xpath(pageTitleName)).getText().trim();
     }
 
     public String getCodeFromPaste() {
-        waiter(linesFromTextAreaForCode);
+        CommonUtils.waitForElementLocated(linesFromTextAreaForCode, driver);
         StringBuilder codeFromPaste = new StringBuilder();
         for (WebElement line : driver.findElements(By.xpath(linesFromTextAreaForCode))) {
             codeFromPaste.append(line.getText());
@@ -37,12 +36,7 @@ public class PastebinPageWithPaste extends AbstractPage {
     }
 
     @Override
-    protected PastebinPageWithPaste openPage() {
+    public PastebinPageWithPaste openPage() {
         return this;
-    }
-
-    private void waiter(String xpath) {
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.xpath(xpath)));
     }
 }
