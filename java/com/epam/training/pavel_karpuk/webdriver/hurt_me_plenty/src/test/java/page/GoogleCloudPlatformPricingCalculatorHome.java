@@ -2,13 +2,14 @@ package page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.CommonUtils;
 
 public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     private String frameFirst = "//*[@id='cloud-site']/devsite-iframe/iframe";
     private String frameSecond = "//*[@id='myFrame']";
+
+    private String loadingPageLocator = "//*[@template='page']";
 
     private String computeEngineButton = "//div[@title='Compute Engine']/parent::div[contains(@class,'buttons')]";
 
@@ -47,8 +48,10 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     private String vmClassInEstimate = "//*[contains(text(),'VM class:')]";
     private String instanceTypeInEstimate = "//*[contains(text(),'Instance type:')]";
+    private String unnecessaryTextFromChildNodeInstanceType = "//*[contains(text(),'Instance type:')]//*[contains(text(),'Discount')]";
     private String regionInEstimate = "//*[contains(text(),'Region:')]";
     private String localSSDInEstimate = "//*[contains(text(),'Local SSD:')]";
+    private String unnecessaryTextFromChildNodeLocalSSD = "//*[contains(text(),'Local SSD:')]//*[contains(text(),'Discount')]";
     private String commitmentTermInEstimate = "//*[contains(text(),'Commitment term:')]";
 
     public GoogleCloudPlatformPricingCalculatorHome(WebDriver driver) {
@@ -56,7 +59,7 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
     }
 
     public GoogleCloudPlatformPricingCalculatorHome activateComputeEngineMode() {
-        waiterElementLocated("//*[@template='page']");
+        CommonUtils.waitForElementLocated(loadingPageLocator, driver);
         goToChildFrame();
         driver.findElement(By.xpath(computeEngineButton)).click();
         return this;
@@ -69,28 +72,28 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectOperatingSystem() {
         driver.findElement(By.xpath(operatingSystemDropdown)).click();
-        waiterElementClickable(selectFreeOperatingSystem);
+        CommonUtils.waitForElementClickable(selectFreeOperatingSystem, driver);
         driver.findElement(By.xpath(selectFreeOperatingSystem)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectMachineClass() {
         driver.findElement(By.xpath(machineClassDropdown)).click();
-        waiterElementClickable(selectRegularMachineClass);
+        CommonUtils.waitForElementClickable(selectRegularMachineClass, driver);
         driver.findElement(By.xpath(selectRegularMachineClass)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectSeries() {
         driver.findElement(By.xpath(seriesDropdown)).click();
-        waiterElementClickable(selectN1Series);
+        CommonUtils.waitForElementClickable(selectN1Series, driver);
         driver.findElement(By.xpath(selectN1Series)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectMachineType() {
         driver.findElement(By.xpath(machineTypeDropdown)).click();
-        waiterElementClickable(selectStandard8MachineType);
+        CommonUtils.waitForElementClickable(selectStandard8MachineType, driver);
         driver.findElement(By.xpath(selectStandard8MachineType)).click();
         return this;
     }
@@ -102,35 +105,35 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectGPUType() {
         driver.findElement(By.xpath(gpuTypeDropdown)).click();
-        waiterElementClickable(selectTeslaV100GPUType);
+        CommonUtils.waitForElementClickable(selectTeslaV100GPUType, driver);
         driver.findElement(By.xpath(selectTeslaV100GPUType)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectNumberOfGPU() {
         driver.findElement(By.xpath(numberOfGPUDropdown)).click();
-        waiterElementClickable(select1NumberOfGPU);
+        CommonUtils.waitForElementClickable(select1NumberOfGPU, driver);
         driver.findElement(By.xpath(select1NumberOfGPU)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectLocalSSD() {
         driver.findElement(By.xpath(localSSDDropdown)).click();
-        waiterElementClickable(select2x375GbLocalSSD);
+        CommonUtils.waitForElementClickable(select2x375GbLocalSSD, driver);
         driver.findElement(By.xpath(select2x375GbLocalSSD)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectDatacenterLocation() {
         driver.findElement(By.xpath(datacenterLocationDropdown)).click();
-        waiterElementClickable(selectFrankfurtLocation);
+        CommonUtils.waitForElementClickable(selectFrankfurtLocation, driver);
         driver.findElement(By.xpath(selectFrankfurtLocation)).click();
         return this;
     }
 
     public GoogleCloudPlatformPricingCalculatorHome selectCommittedUsage() {
         driver.findElement(By.xpath(committedUsageDropdown)).click();
-        waiterElementClickable(select1YearCommittedUsage);
+        CommonUtils.waitForElementClickable(select1YearCommittedUsage, driver);
         driver.findElement(By.xpath(select1YearCommittedUsage)).click();
         return this;
     }
@@ -141,31 +144,31 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
     }
 
     public String getVMClass() {
-        waiterElementLocated(vmClassInEstimate);
+        CommonUtils.waitForElementLocated(vmClassInEstimate, driver);
         return driver.findElement(By.xpath(vmClassInEstimate)).getText().trim();
     }
 
     public String getInstanceType() {
-        waiterElementLocated(instanceTypeInEstimate);
+        CommonUtils.waitForElementLocated(instanceTypeInEstimate, driver);
         String text = driver.findElement(By.xpath(instanceTypeInEstimate)).getText();
-        String unnecessaryText = driver.findElement(By.xpath("//*[contains(text(),'Instance type:')]//*[contains(text(),'Discount')]")).getText();
+        String unnecessaryText = driver.findElement(By.xpath(unnecessaryTextFromChildNodeInstanceType)).getText();
         return text.replace(unnecessaryText, "").trim();
     }
 
     public String getRegion() {
-        waiterElementLocated(regionInEstimate);
+        CommonUtils.waitForElementLocated(regionInEstimate, driver);
         return driver.findElement(By.xpath(regionInEstimate)).getText().trim();
     }
 
     public String getLocalSSD() {
-        waiterElementLocated(localSSDInEstimate);
+        CommonUtils.waitForElementLocated(localSSDInEstimate, driver);
         String text = driver.findElement(By.xpath(localSSDInEstimate)).getText();
-        String unnecessaryText = driver.findElement(By.xpath("//*[contains(text(),'Local SSD:')]//*[contains(text(),'Discount')]")).getText();
+        String unnecessaryText = driver.findElement(By.xpath(unnecessaryTextFromChildNodeLocalSSD)).getText();
         return text.replace(unnecessaryText, "").trim();
     }
 
     public String getCommitmentTerm() {
-        waiterElementLocated(commitmentTermInEstimate);
+        CommonUtils.waitForElementLocated(commitmentTermInEstimate, driver);
         return driver.findElement(By.xpath(commitmentTermInEstimate)).getText().trim();
     }
 
@@ -173,16 +176,6 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
         driver.switchTo().defaultContent();
         driver.switchTo().frame(driver.findElement(By.xpath(frameFirst)));
         driver.switchTo().frame(driver.findElement(By.xpath(frameSecond)));
-    }
-
-    private void waiterElementClickable(String xpath) {
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
-    }
-
-    private void waiterElementLocated(String xpath) {
-        new WebDriverWait(driver, WAIT_TIMEOUT_SECONDS)
-                .until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpath)));
     }
 
     @Override

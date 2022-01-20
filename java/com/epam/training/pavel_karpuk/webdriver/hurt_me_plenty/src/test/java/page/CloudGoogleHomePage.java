@@ -10,10 +10,10 @@ public class CloudGoogleHomePage extends AbstractPage {
 
     private static final String HOMEPAGE_URL = "https://cloud.google.com/";
 
+    private String searchInput = "//input[@aria-label='Search']";
+
     @FindBy(xpath = "//form[@class='devsite-search-form']")
     private WebElement searchButton;
-
-    private String searchInput = "//input[@aria-label='Search']";
 
     public CloudGoogleHomePage(WebDriver driver) {
         super(driver);
@@ -28,6 +28,6 @@ public class CloudGoogleHomePage extends AbstractPage {
     public CloudGoogleSearchPage searchForTerm(String searchTerm) {
         searchButton.click();
         driver.findElement(By.xpath(searchInput)).sendKeys(searchTerm + Keys.ENTER);
-        return new CloudGoogleSearchPage(driver, searchTerm);
+        return new CloudGoogleSearchPage(driver);
     }
 }
