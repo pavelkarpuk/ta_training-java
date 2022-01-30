@@ -2,9 +2,9 @@ package page;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import static utils.CommonUtils.waitForElementClickable;
-import static utils.CommonUtils.waitForElementLocated;
 
 public class EmailHomePage extends AbstractPage {
 
@@ -16,11 +16,40 @@ public class EmailHomePage extends AbstractPage {
         super(driver);
     }
 
-    public String getEstimatedMonthlyCost() {
-        refreshEmailHomePage();
-        goToChildFrame();
-        waitForElementLocated(estimatedMonthlyCost, driver);
-        return driver.findElement(estimatedMonthlyCost).getText();
+    public String getEstimatedMonthlyCost() throws Exception {
+        try {
+            return waitEmail().getText();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new Exception();
+    }
+
+    private WebElement waitEmail() throws Exception {
+        for (int i = 0; i < 5; i++) {
+            String parentWindow = driver.getWindowHandle();
+            goToChildFrame();
+            WebElement element = isEmailExist();
+            if (element != null) {
+                return element;
+            }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            driver.switchTo().window(parentWindow);
+            refreshEmailHomePage();
+        }
+        throw new Exception();
+    }
+
+    private WebElement isEmailExist() {
+        try {
+            return driver.findElement(estimatedMonthlyCost);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private void goToChildFrame() {

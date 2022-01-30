@@ -56,9 +56,14 @@ public class GoogleCloudPlatformPricingCalculatorTest extends BaseTest {
 
         switchBetweenTabs(1, driver);
 
-        String totalEstimatedCostInEmail = pageWithRandomEmail
-                .checkEmail()
-                .getEstimatedMonthlyCost();
+        String totalEstimatedCostInEmail = null;
+        try {
+            totalEstimatedCostInEmail = pageWithRandomEmail
+                    .checkEmail()
+                    .getEstimatedMonthlyCost();
+        } catch (Exception e) {
+            logger.info("The email didn't arrive");
+        }
 
         Assert.assertEquals(totalEstimatedCostInCalculator, totalEstimatedCostInEmail);
     }
