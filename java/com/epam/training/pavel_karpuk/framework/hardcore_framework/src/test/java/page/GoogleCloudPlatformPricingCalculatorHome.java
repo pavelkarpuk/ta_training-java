@@ -21,24 +21,33 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
     private final By numberOfInstancesInput = By.xpath("//*[contains(@ng-model,'quantity')]");
 
     private final By operatingSystemDropdown = By.xpath("//*[@ng-model='listingCtrl.computeServer.os']");
+    private static final String DROPDOWN_OPTION_OPERATING_SYSTEM = "//*[contains(@class,'clickable')]//*[contains(text(),'%s')]";
 
     private final By machineClassDropdown = By.xpath("//*[@placeholder='VM Class']");
+    private static final String DROPDOWN_OPTION_MACHINE_CLASS = "//*[contains(@class,'clickable')]//*[contains(text(),'%s')]";
 
     private final By seriesDropdown = By.xpath("//*[@placeholder='Series']");
+    private static final String DROPDOWN_OPTION_SERIES = "//*[contains(text(),'%s')]";
 
     private final By machineTypeDropdown = By.xpath("//*[@placeholder='Instance type']");
+    private static final String DROPDOWN_OPTION_MACHINE_TYPE = "//*[contains(text(),'%s')]";
 
     private final By addGPUsButton = By.xpath("//*[@ng-model='listingCtrl.computeServer.addGPUs']//*[@class='md-container md-ink-ripple']");
 
     private final By gpuTypeDropdown = By.xpath("//*[contains(@class,'placeholder')]/*[@placeholder='GPU type']");
+    private static final String DROPDOWN_OPTION_GPU_TYPE = "//*[contains(text(),'%s')]";
 
     private final By numberOfGPUDropdown = By.xpath("//*[@placeholder='Number of GPUs']");
+    private static final String DROPDOWN_OPTION_NUMBER_OF_GPU = "//*[contains(@ng-disabled,'GPU')]/*[contains(text(),'%s')]";
 
     private final By localSSDDropdown = By.xpath("//*[contains(@ng-if,'Ssd')]//*[@placeholder='Local SSD']");
+    private static final String DROPDOWN_OPTION_LOCAL_SSD = "//*[@ng-value='item.value']/child::div[contains(text(),'%s')]";
 
     private final By datacenterLocationDropdown = By.xpath("//*[@placeholder='Datacenter location'][contains(@ng-model,'computeServer.location')]");
+    private static final String DROPDOWN_OPTION_DATACENTER_LOCATION = "//*[contains(@class,'clickable')]//*[contains(text(),'%s')]";
 
     private final By committedUsageDropdown = By.xpath("//*[@placeholder='Committed usage'][contains(@ng-model,'compute')]");
+    private static final String DROPDOWN_OPTION_COMMITTED_USAGE = "//*[contains(@class,'clickable')]//*[contains(text(),'%s')]";
 
     private final By addToEstimateButton = By.xpath("//*[@aria-label='Add to Estimate'][contains(@ng-click,'Compute')]");
 
@@ -82,7 +91,7 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectOperatingSystem(GoogleCloudPricingCalculator calculator) {
         driver.findElement(operatingSystemDropdown).click();
-        By dropdownOption = By.xpath("//*[contains(@class,'clickable')]//*[contains(text(),'" + calculator.getOperatingSystem() + "')]");
+        By dropdownOption = By.xpath(String.format(DROPDOWN_OPTION_OPERATING_SYSTEM, calculator.getOperatingSystem()));
         waitForElementClickable(dropdownOption, driver);
         driver.findElement(dropdownOption).click();
         return this;
@@ -90,7 +99,7 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectMachineClass(GoogleCloudPricingCalculator calculator) {
         driver.findElement(machineClassDropdown).click();
-        By dropdownOption = By.xpath("//*[contains(@class,'clickable')]//*[contains(text(),'" + calculator.getMachineClass() + "')]");
+        By dropdownOption = By.xpath(String.format(DROPDOWN_OPTION_MACHINE_CLASS, calculator.getMachineClass()));
         waitForElementClickable(dropdownOption, driver);
         driver.findElement(dropdownOption).click();
         return this;
@@ -98,7 +107,7 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectSeries(GoogleCloudPricingCalculator calculator) {
         driver.findElement(seriesDropdown).click();
-        By dropdownOption = By.xpath("//*[contains(text(),'" + calculator.getSeries() + "')]");
+        By dropdownOption = By.xpath(String.format(DROPDOWN_OPTION_SERIES, calculator.getSeries()));
         waitForElementClickable(dropdownOption, driver);
         driver.findElement(dropdownOption).click();
         return this;
@@ -106,7 +115,7 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectMachineType(GoogleCloudPricingCalculator calculator) {
         driver.findElement(machineTypeDropdown).click();
-        By dropdownOption = By.xpath("//*[contains(text(),'" + calculator.getMachineType() + "')]");
+        By dropdownOption = By.xpath(String.format(DROPDOWN_OPTION_MACHINE_TYPE, calculator.getMachineType()));
         waitForElementClickable(dropdownOption, driver);
         driver.findElement(dropdownOption).click();
         return this;
@@ -119,7 +128,7 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectGPUType(GoogleCloudPricingCalculator calculator) {
         driver.findElement(gpuTypeDropdown).click();
-        By dropdownOption = By.xpath("//*[contains(text(),'" + calculator.getGpuType() + "')]");
+        By dropdownOption = By.xpath(String.format(DROPDOWN_OPTION_GPU_TYPE, calculator.getGpuType()));
         waitForElementClickable(dropdownOption, driver);
         driver.findElement(dropdownOption).click();
         return this;
@@ -127,7 +136,7 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectNumberOfGPU(GoogleCloudPricingCalculator calculator) {
         driver.findElement(numberOfGPUDropdown).click();
-        By dropdownOption = By.xpath("//*[contains(@ng-disabled,'GPU')]/*[contains(text(),'" + calculator.getNumberOfGPU() + "')]");
+        By dropdownOption = By.xpath(String.format(DROPDOWN_OPTION_NUMBER_OF_GPU, calculator.getNumberOfGPU()));
         waitForElementClickable(dropdownOption, driver);
         driver.findElement(dropdownOption).click();
         return this;
@@ -135,7 +144,7 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectLocalSSD(GoogleCloudPricingCalculator calculator) {
         driver.findElement(localSSDDropdown).click();
-        By dropdownOption = By.xpath("//*[@ng-value='item.value']/child::div[contains(text(),'" + calculator.getLocalSSD() + "')]");
+        By dropdownOption = By.xpath(String.format(DROPDOWN_OPTION_LOCAL_SSD, calculator.getLocalSSD()));
         waitForElementClickable(dropdownOption, driver);
         driver.findElement(dropdownOption).click();
         return this;
@@ -143,7 +152,7 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectDatacenterLocation(GoogleCloudPricingCalculator calculator) {
         driver.findElement(datacenterLocationDropdown).click();
-        By dropdownOption = By.xpath("//*[contains(@class,'clickable')]//*[contains(text(),'" + calculator.getDatacenterLocation() + "')]");
+        By dropdownOption = By.xpath(String.format(DROPDOWN_OPTION_DATACENTER_LOCATION, calculator.getDatacenterLocation()));
         waitForElementClickable(dropdownOption, driver);
         driver.findElement(dropdownOption).click();
         return this;
@@ -151,7 +160,7 @@ public class GoogleCloudPlatformPricingCalculatorHome extends AbstractPage {
 
     public GoogleCloudPlatformPricingCalculatorHome selectCommittedUsage(GoogleCloudPricingCalculator calculator) {
         driver.findElement(committedUsageDropdown).click();
-        By dropdownOption = By.xpath("//*[contains(@class,'clickable')]//*[contains(text(),'" + calculator.getCommittedUsage() + "')]");
+        By dropdownOption = By.xpath(String.format(DROPDOWN_OPTION_COMMITTED_USAGE, calculator.getCommittedUsage()));
         waitForElementClickable(dropdownOption, driver);
         driver.findElement(dropdownOption).click();
         return this;
